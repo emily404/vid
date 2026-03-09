@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>18 | Grace CHEN 陈佳薏</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Noto+Sans+SC:wght@300;700&family=Syne:wght@400;700;800&display=swap');
+
+        :root {
+            --accent: #d4ff00; 
+            --soft-bg: #1a1a1a;
+            --card-bg: #252525;
+        }
+
+        body {
+            background-color: var(--soft-bg);
+            color: #efefef;
+            font-family: 'Space Grotesk', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .chinese-text { font-family: 'Noto Sans SC', sans-serif; }
+        .syne-font { font-family: 'Syne', sans-serif; }
+
+        html { scroll-behavior: smooth; }
+
+        .billie-gradient {
+            background: linear-gradient(135deg, #d4ff00 0%, #88aa00 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-container {
+            position: relative;
+            height: 90vh;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .hero-bg-split {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            z-index: 0;
+            opacity: 0.35;
+        }
+
+        .hero-side {
+            width: 50%;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-side img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(30%) contrast(1.1);
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(26,26,26,0.1) 0%, rgba(26,26,26,1) 90%);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+        }
+
+        .split-divider-line {
+            position: absolute;
+            left: 50%;
+            top: 15%;
+            bottom: 25%;
+            width: 1px;
+            background: var(--accent);
+            box-shadow: 0 0 20px var(--accent);
+            z-index: 1;
+            transform: translateX(-50%);
+            opacity: 0.6;
+        }
+
+        .photo-frame {
+            background: var(--card-bg);
+            padding: 8px;
+            box-shadow: 8px 8px 0px rgba(212, 255, 0, 0.1);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .photo-frame:hover {
+            transform: rotate(-1deg) scale(1.02);
+            box-shadow: 10px 10px 0px var(--accent);
+        }
+
+        .tag {
+            background: var(--accent);
+            color: black;
+            padding: 2px 8px;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.7rem;
+            display: inline-block;
+        }
+
+        .highlights-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            grid-template-rows: repeat(4, 120px);
+            gap: 15px;
+        }
+
+        .scroll-section {
+            min-height: 80vh;
+            padding: 6rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .video-container {
+            position: relative;
+            aspect-ratio: 16/9;
+            background: #000;
+            border-radius: 32px;
+            overflow: hidden;
+            border: 1px solid rgba(212, 255, 0, 0.2);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .wish-card-v2 {
+            background: rgba(255,255,255,0.03);
+            border-radius: 32px;
+            border: 1px solid rgba(255,255,255,0.05);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-bottom: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .wish-card-v2 { flex-direction: row; min-height: 400px; }
+            .wish-card-v2.reverse { flex-direction: row-reverse; }
+            .wish-image-side { width: 40%; }
+            .wish-text-side { width: 60%; }
+        }
+
+        .wish-image-side {
+            position: relative;
+            min-height: 300px;
+            background: #222;
+        }
+
+        .wish-image-side img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(20%);
+        }
+
+        .wish-text-side {
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .wish-card-v2:hover {
+            border-color: var(--accent);
+            background: rgba(255,255,255,0.05);
+            transform: translateY(-5px);
+        }
+
+        .quote-icon {
+            font-size: 3rem;
+            color: var(--accent);
+            opacity: 0.2;
+            margin-bottom: -1.5rem;
+        }
+
+        .offer-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 24px;
+            padding: 2rem;
+            transition: 0.4s;
+            position: relative;
+        }
+
+        .offer-card.accepted {
+            border-color: rgba(212, 255, 0, 0.3);
+            background: linear-gradient(145deg, rgba(212, 255, 0, 0.03), transparent);
+        }
+
+        #ai-mirror-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 100;
+            background: var(--accent);
+            color: black;
+            padding: 14px 28px;
+            border-radius: 50px;
+            font-weight: 800;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: 0.3s;
+        }
+
+        #ai-chat-window {
+            position: fixed;
+            bottom: 110px;
+            right: 30px;
+            width: 380px;
+            height: 550px;
+            background: #1e1e1e;
+            border: 1px solid var(--accent);
+            border-radius: 30px;
+            z-index: 99;
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+        }
+
+        .chat-messages { flex: 1; overflow-y: auto; padding: 25px; display: flex; flex-direction: column; gap: 15px; }
+        .message { max-width: 85%; padding: 12px 18px; border-radius: 20px; font-size: 14px; line-height: 1.6; }
+        .message.ai { background: #2a2a2a; color: white; align-self: flex-start; border-bottom-left-radius: 4px; }
+        .message.user { background: var(--accent); color: black; align-self: flex-end; border-bottom-right-radius: 4px; font-weight: 500; }
+        
+    </style>
+</head>
+<body>
+
+    <button id="ai-mirror-btn" onclick="toggleChat()">
+        <span>✨ 时光 AI 对话镜</span>
+    </button>
+
+    <div id="ai-chat-window">
+        <div class="p-5 bg-[#d4ff00] text-black flex justify-between items-center">
+            <span class="font-black text-xs uppercase tracking-widest">Future Grace / AI Mirror</span>
+            <button onclick="toggleChat()" class="text-xl"><i class="fas fa-times"></i></button>
+        </div>
+        <div id="chat-messages" class="chat-messages">
+            <div class="message ai chinese-text">
+                佳薏🎬
+            </div>
+        </div>
+        <div class="p-5 border-t border-white/10 flex gap-3 bg-zinc-900/50">
+            <input type="text" id="user-input" class="flex-1 bg-zinc-800 border-none rounded-xl p-3 text-white text-sm outline-none" placeholder="和 10 年后的佳薏对话..." onkeypress="handleKeyPress(event)">
+            <button onclick="sendMessage()" class="bg-[#d4ff00] text-black w-12 h-12 rounded-xl text-lg hover:scale-105 transition"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <!-- ✨ Hero Section -->
+    <div class="hero-container">
+        <div class="hero-bg-split">
+            <div class="hero-side">
+                <img src="https://lh3.googleusercontent.com/pw/AP1GczM9KMPZfBlAXDWnpNP8BJ5O4N2zxcoC482MlaMgiiKKeal9DUb3VBbDt6hTrVqqragYoHU5HOSqgBHF27k7Det791vTZzNkb6GQI34fhaHzNGeELxU6nedwbYXOa0g7qGeErCuEUmxQW27efDEI7er7Uw=w2102-h1576-s-no-gm?authuser=0" alt="Age 5" onerror="this.src='https://images.unsplash.com/photo-1544126592-807daf21565c?auto=format&fit=crop&q=80&w=800'">
+            </div>
+            <div class="hero-side">
+                <img src="https://lh3.googleusercontent.com/pw/AP1GczNGgKS_TdSZGSt3hLY5ttZa0B_0tNqmRqtFpzc1-eGgylCatD5UAcyVVljJW0-sDT7yWZtfdJF2IHbUMm9Z5LV-MVAcNOsJY8aF9bd1vL_JHjrSgx8HUMcHspg8wX7M9d0dhU0uIkq7dFZtBPCKix1AgA=w1047-h1531-s-no-gm?authuser=0" alt="Age 18" onerror="this.src='https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&q=80&w=800'">
+            </div>
+        </div>
+        <div class="hero-overlay"></div>
+        <div class="split-divider-line"></div>
+        
+        <div class="hero-content">
+            <h2 class="syne-font text-3xl font-bold mb-6 opacity-70 uppercase tracking-[0.3em]">Grace CHEN 陈佳薏</h2>
+            <h1 class="syne-font text-[12rem] font-extrabold mb-0 leading-none tracking-tighter billie-gradient">18.</h1>
+            <p class="text-2xl uppercase tracking-[0.5em] font-light mt-6 chinese-text">Authentic & Unstoppable</p>
+            <div class="mt-14 flex justify-center flex-wrap gap-5">
+                <span class="bg-[#d4ff00] px-8 py-3 rounded-full text-black font-black text-sm tracking-widest">ENFP 🐶</span>
+                <span class="border border-white/30 px-8 py-3 rounded-full text-sm font-bold tracking-widest backdrop-blur-sm">TRAVELLER ✈️</span>
+                <span class="border border-white/30 px-8 py-3 rounded-full text-sm font-bold tracking-widest backdrop-blur-sm">WOOF!</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Highlights Wall -->
+    <section class="scroll-section bg-zinc-900/50">
+        <div class="max-w-6xl mx-auto w-full">
+            <h2 class="syne-font text-5xl font-black mb-12 billie-gradient uppercase tracking-tighter">时光片段 Highlights</h2>
+            <div class="highlights-grid">
+                <div class="col-span-3 row-span-3 photo-frame">
+                    <!-- Replace the src below with a direct image link or local filename -->
+                    <img src="https://lh3.googleusercontent.com/pw/AP1GczN175D8S8snrsXr6fhAR2HFLYlNV1s2rDdwE1esW7HgYqAG0IkXiDp5q6EJFo2gzFdJYdJLfwL9dCEMG-zCdaFSBlQYRHlz2cEOOdUMuFdpPr0sd5DWqgMWL2_Nnm18kktkxrhde-swwWMuQTY0xkG0Tw=w1182-h1576-s-no-gm?authuser=0" alt="Childhood Memory" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&q=80&w=800'">
+                    <div class="absolute bottom-6 left-6 tag">Little Tour Guide</div>
+                </div>
+                <div class="col-span-3 row-span-2 photo-frame">
+                    <!-- Change 'travel_photo.jpg' to your actual image name -->
+                    <img src="https://lh3.googleusercontent.com/pw/AP1GczNn-Oozbu4PZxR01C98KnxkvoyHuj8Lanu0mTt2OIpIov2gzySjXrM95kii59Q39O3-JiEm4n5LSvJS-5sxjbgH5IbypBbL8Wy1cSXcdcnzpwUahYJ70zKxG4Ko4LL5YsrguwgJtIqs91KTBa4eDO6m7w=w960-h1280-s-no-gm?authuser=0" alt="Travel" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?auto=format&fit=crop&q=80&w=800'">
+                    <div class="absolute bottom-6 left-6 tag">Winnie the Pooh Era</div>
+                </div>
+                <div class="col-span-3 row-span-1 photo-frame bg-zinc-800 flex items-center justify-center">
+                    <span class="syne-font text-xs tracking-[0.5em] opacity-40 uppercase">Always Authentic</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ✨ Updated Video Section (Single Centered Video) -->
+    <section class="scroll-section">
+        <div class="max-w-5xl mx-auto w-full">
+            <div class="text-center mb-10">
+                <h2 class="syne-font text-5xl font-black billie-gradient uppercase tracking-tighter">The 18th Vlog</h2>
+                <p class="text-xs uppercase tracking-[0.4em] opacity-40 mt-4 font-bold">Documenting the Transition to Adulthood</p>
+            </div>
+        
+            
+            <div class="video-container">
+               <iframe class="w-full h-full" src="https://raw.githubusercontent.com/emily404/vid/main/20240130214718625%202.MP4" title="Grace 18th Birthday Vlog" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- Family Wishes Section -->
+    <section class="scroll-section bg-[#151515]">
+        <div class="max-w-6xl mx-auto w-full">
+            <h2 class="syne-font text-5xl font-black mb-20 text-center billie-gradient uppercase tracking-tighter">Family Love & Wishes</h2>
+            
+            <div class="space-y-12">
+                <!-- Granny -->
+                <div class="wish-card-v2">
+                    <div class="wish-image-side">
+                        <img src="https://lh3.googleusercontent.com/pw/AP1GczPyiBaMZ1XCv-j_ayCNwgusjE0G8daqYeEbLg1uc7VcLjUvScZ5VW_IYxdJwrY_PYTiXBZGNHksNyS8Pa9pu2_3o3D9TRjuXHSrMEPFQ-XxMCAhoJjHTQfp_AAIco83XBzeC_aB5_yjpW5Qgrdat5lrUA=w1182-h1576-s-no-gm?authuser=0" alt="Mom" onerror="this.src='https://images.unsplash.com/photo-1594132036725-78336219808a?auto=format&fit=crop&q=80&w=800'">
+                        <div class="absolute top-8 left-8 bg-[#d4ff00] text-black px-4 py-1 font-black text-xs tracking-widest uppercase">From Grandma</div>
+                    </div>
+                    <div class="wish-text-side">
+                        <i class="fas fa-quote-left quote-icon"></i>
+                        <h3 class="syne-font text-2xl font-black mb-6 uppercase tracking-widest text-[#d4ff00]">From: Nainai</h3>
+                        <p class="chinese-text text-xl leading-relaxed opacity-90 mb-6">
+                        希望你成人后越发聪明理智，意气奋发向上！
+                        </p>
+                        <div class="h-px bg-white/10 w-20"></div>
+                        <p class="mt-4 text-xs font-bold opacity-30 uppercase tracking-[0.5em]">Love you to the moon and back</p>
+                    </div>
+                </div>
+
+                <!-- Mom -->
+                <div class="wish-card-v2">
+                    <div class="wish-image-side">
+                        <img src="https://lh3.googleusercontent.com/pw/AP1GczOr0TtSWFX3xERTL__DJNuyD2e-LX-EXhCKd1t4Xd5sKkD_KPwXPuc0Pfqh2wPJGTzWn8SfMb7I3MpQ6snjlzBsl36PN3Wdy5a9B9-Wg4ARw-OQv1FzLi-ak3TpjCOevf4P9mPc-HwOGuv0CQsgouG0sg=w1182-h1576-s-no-gm?authuser=0" alt="Mom" onerror="this.src='https://images.unsplash.com/photo-1594132036725-78336219808a?auto=format&fit=crop&q=80&w=800'">
+                        <div class="absolute top-8 left-8 bg-[#d4ff00] text-black px-4 py-1 font-black text-xs tracking-widest uppercase">My Dearest Mom</div>
+                    </div>
+                    <div class="wish-text-side">
+                        <i class="fas fa-quote-left quote-icon"></i>
+                        <h3 class="syne-font text-2xl font-black mb-6 uppercase tracking-widest text-[#d4ff00]">From: Mama</h3>
+                        <p class="chinese-text text-xl leading-relaxed opacity-90 mb-6">
+                            妹妹18岁了，妈妈终于松了一口气，成年了，翅膀有点硬了，意味着妈妈可以退居二线啦，哈哈哈，过往18年妹妹的画面，在妈妈脑海里一幅幅闪过，出生、牙牙学语、蹒跚学步、金蕾幼儿园、Maple小学、仓五小、则徐小学、杨桥中学、西湖国际、Magee中学，用过尿布、缠过妈妈，数学从不及格到AP微积分满分，妹妹的小手，妈妈牵着牵着，慢慢牵不住了，因为妹妹要奔跑着向前了，妈妈跟着跟着慢慢吃力了，不过妈妈心里很欣慰，庭院里遛不出千里马，该放手了，天高任鸟飞，勇敢追寻自己梦想吧，妈妈永远支持你！
+                        </p>
+                        <div class="h-px bg-white/10 w-20"></div>
+                        <p class="mt-4 text-xs font-bold opacity-30 uppercase tracking-[0.5em]">Love you to the moon and back</p>
+                    </div>
+                </div>
+
+                <!-- Sister -->
+                <div class="wish-card-v2 reverse">
+                    <div class="wish-image-side">
+                        <img src="https://lh3.googleusercontent.com/pw/AP1GczMY4P6C6pg1bdzaxGYI_Vb74p5X45Z4wgHXBA8CGGiooYoN4qp4LxZEYialjVLWoo4PiHbEB-XaKXoE_szDKCLmiyCvtmj4QCJcJE0cxW0idye17oykcda8GPKh6bxBUTTINW23ii-nyYF6pQn_-92Vyg=w1182-h1576-s-no-gm?authuser=0" alt="Sister" class="grayscale hover:grayscale-0 transition duration-700" onerror="this.src='https://images.unsplash.com/photo-1520626337972-ebf863448db6?auto=format&fit=crop&q=80&w=800'">
+                        <div class="absolute top-8 right-8 bg-white text-black px-4 py-1 font-black text-xs tracking-widest uppercase">Best Sister Ever</div>
+                    </div>
+                    <div class="wish-text-side">
+                        <i class="fas fa-quote-left quote-icon"></i>
+                        <h3 class="syne-font text-2xl font-black mb-6 uppercase tracking-widest text-white">From: Your Sis</h3>
+                        <p class="chinese-text text-xl leading-relaxed opacity-90 mb-6 font-bold">
+                        迟来的18岁生日快乐！
+你今年交了很多新朋友，大家都很乐意和你分享时光。家人总希望你能越来越来好，可能平时更多用如何进步的角度和你交流，所以我对自己说要更多的看到你的高光时刻和优点们。越来越独立，有思想，爱护照顾身边的人，建立影响力。
+我记得我申请大学的时候你才2岁呢，我当时的personal statement写的就是妹妹的到来给我带来的影响和变化。如今你也到了要申请大学的年纪啦， 今年我们一起远程完成所有文书的撰写和修改，仿佛我自己又申请了一次大学，只不过这次更加勇敢，更加努力，心也飞得比15年前更远，看到你完成你的amazing portfolio觉得你真的很棒，这三年非常努力的在学习，锻炼和成长。无论最后最后去哪个学校，都能看到更大的世界。我完全同意你英语老师说的：you will get into any school you wish. 
+当然，这或许只是人生的其中一次试炼，但你已经为未来的试炼积攒了不少经验了。
+希望新的一年里，保持身体健康，接纳自己的所有，容许一切的变化和发生。姐姐的心和你在一起，往前冲的时候要定期关心爸爸妈妈哦
+                        </p>
+                        <div class="h-px bg-[#d4ff00] w-20"></div>
+                        <p class="mt-4 text-xs font-bold text-[#d4ff00] uppercase tracking-[0.5em]">Always here for you</p>
+                    </div>
+                </div>
+
+                <!-- Dad -->
+                <div class="wish-card-v2">
+                    <div class="wish-image-side">
+                        <img src="https://lh3.googleusercontent.com/pw/AP1GczMdecrXfC4xiKuYMOdNcDCLNr_kZM5Dy5pH_nc2WFHOQbghoI_-J27VJeCS138JUqzEe300DftYDSpki8Jb0WLYUAFRAKqeEOm4o29Gr010SuoOG_09N3-zwl37hYIOfj6nD8Y7q2E77tSEGVGV9lrLKA=w1706-h1279-s-no-gm?authuser=0" alt="Dad" onerror="this.src='https://images.unsplash.com/photo-1490138139357-fc819d02e344?auto=format&fit=crop&q=80&w=800'">
+                        <div class="absolute top-8 left-8 bg-[#d4ff00] text-black px-4 py-1 font-black text-xs tracking-widest uppercase">My Hero Dad</div>
+                    </div>
+                    <div class="wish-text-side">
+                        <i class="fas fa-quote-left quote-icon"></i>
+                        <h3 class="syne-font text-2xl font-black mb-6 uppercase tracking-widest text-zinc-400">From: Papa</h3>
+                        <p class="chinese-text text-xl leading-relaxed opacity-90 mb-6 italic">
+                        写给十八岁的你
+
+亲爱的孩子，
+
+今年你十八岁了。
+
+此刻提笔，眼前浮现的仍是那个在仓五小门口抹眼泪的小小身影——陌生的语言，看不懂的题目，不知所措的你。从温哥华的英文世界，突然被投进福州的小学课堂，那该是怎样的茫然与艰难。
+
+可你走过来了。
+
+我们看见你怎样一个个地认字，怎样一遍遍地做题，从看不懂试卷到班级上游。看见你转学时既期盼又担忧的眼神，看见你从畏惧讲解到在三坊七巷落落大方地讲述名人故事。小记者、讲解员、冰球队、戏剧社——每一扇门你都曾犹豫，但每一次你都选择推开。
+
+更让我们骄傲的，不是那些最终的成绩，而是你面对困难的方式。
+
+当物理数学让你畏难时，你没有退缩，直到小伙伴主动来找你“拜师”；当冰球队和戏剧社需要争取时，你没有等待，而是自己去努力实现。从被帮助到帮助别人，从畏惧挑战到迎接挑战——这是真正的成长。
+
+十八年，你把每一次“我不会”都变成了“我可以试试”，把每一次“我害怕”都变成了“我再努力一下”。那些眼泪化作了底气，那些挫折筑成了阶梯。
+
+孩子，成人不是终点，而是一个新的起点。未来的路上，一定还有更大的风浪、更难的课题。但我们深信，经历过这一切的你，已经拥有应对任何风浪的勇气与智慧。
+
+愿你带着这些年磨砺出的坚韧，去拥抱更广阔的世界。愿你在未来的路上，始终记得——那个曾经抹着眼泪走进陌生教室的小女孩，最终都一一化解了所有困难，长成了今天这个勇敢、善良、坚韧的自己。
+
+十八岁快乐，我的女儿。
+
+前路漫漫，你早已准备好。
+                        </p>
+                        <div class="h-px bg-white/10 w-20"></div>
+                        <p class="mt-4 text-xs font-bold opacity-30 uppercase tracking-[0.5em]">Fly high with courage</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Offers Section -->
+    <section class="scroll-section">
+        <div class="max-w-6xl mx-auto w-full">
+            <div class="text-center mb-16">
+                <h2 class="syne-font text-6xl font-black billie-gradient uppercase tracking-tighter">OFFERS UNLOCKED</h2>
+                <p class="chinese-text text-zinc-500 mt-4 uppercase tracking-[0.3em] text-xs font-bold">The Academic Journey / Class of 2026</p>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+                <div class="offer-card accepted">
+                    <div class="w-12 h-12 bg-blue-500/10 rounded-xl flex items-center justify-center font-black text-xl mb-6">T</div>
+                    <h4 class="font-bold text-xl mb-2">U of Toronto</h4>
+                    <p class="text-xs opacity-40 font-bold tracking-widest uppercase">St. George / Engineering/Arts</p>
+                    <i class="fas fa-check-circle absolute top-6 right-6 text-[#d4ff00] text-xl"></i>
+                </div>
+                <div class="offer-card accepted">
+                    <div class="w-12 h-12 bg-yellow-500/10 rounded-xl flex items-center justify-center font-black text-xl mb-6">W</div>
+                    <h4 class="font-bold text-xl mb-2">Waterloo</h4>
+                    <p class="text-xs opacity-40 font-bold tracking-widest uppercase">Mathematics & CS</p>
+                    <i class="fas fa-check-circle absolute top-6 right-6 text-[#d4ff00] text-xl"></i>
+                </div>
+                <div class="offer-card accepted">
+                    <div class="w-12 h-12 bg-red-500/10 rounded-xl flex items-center justify-center font-black text-xl mb-6">M</div>
+                    <h4 class="font-bold text-xl mb-2">McMaster</h4>
+                    <p class="text-xs opacity-40 font-bold tracking-widest uppercase">Ontario Excellence</p>
+                    <i class="fas fa-check-circle absolute top-6 right-6 text-[#d4ff00] text-xl"></i>
+                </div>
+                <div class="offer-card accepted">
+                    <div class="w-12 h-12 bg-blue-400/10 rounded-xl flex items-center justify-center font-black text-xl mb-6">Q</div>
+                    <h4 class="font-bold text-xl mb-2">Queen's</h4>
+                    <p class="text-xs opacity-40 font-bold tracking-widest uppercase">Arts & Science</p>
+                    <i class="fas fa-check-circle absolute top-6 right-6 text-[#d4ff00] text-xl"></i>
+                </div>
+                <div class="offer-card accepted">
+                    <div class="w-12 h-12 bg-green-500/10 rounded-xl flex items-center justify-center font-black text-xl mb-6">D</div>
+                    <h4 class="font-bold text-xl mb-2">UC Davis</h4>
+                    <p class="text-xs opacity-40 font-bold tracking-widest uppercase">California, USA</p>
+                    <i class="fas fa-check-circle absolute top-6 right-6 text-[#d4ff00] text-xl"></i>
+                </div>
+                <div class="offer-card border-dashed bg-transparent flex flex-col items-center justify-center opacity-40">
+                    <p class="italic text-lg font-bold">Waiting: UBC & UCLA</p>
+                    <div class="mt-4 flex gap-2">
+                        <div class="w-2 h-2 bg-white rounded-full animate-bounce"></div>
+                        <div class="w-2 h-2 bg-white rounded-full animate-bounce [animation-delay:-0.15s]"></div>
+                        <div class="w-2 h-2 bg-white rounded-full animate-bounce [animation-delay:-0.3s]"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-32 text-center">
+        <div class="opacity-20 uppercase text-[12px] tracking-[1em] font-black mb-4">Grace Chen • 18 Years</div>
+        <div class="opacity-10 text-[10px] tracking-widest">Love from Vancouver & Fuzhou • 2026</div>
+    </footer>
+
+    <script>
+        const apiKey = "";
+        function toggleChat() {
+            const chat = document.getElementById('ai-chat-window');
+            chat.style.display = chat.style.display === 'flex' ? 'none' : 'flex';
+        }
+
+        async function sendMessage() {
+            const input = document.getElementById('user-input');
+            const text = input.value.trim();
+            if (!text) return;
+            addMessage(text, 'user');
+            input.value = '';
+            try {
+                const response = await callGeminiAPI(text);
+                addMessage(response, 'ai');
+            } catch (error) {
+                addMessage("时光镜正在处理数据...", 'ai');
+            }
+        }
+
+        function addMessage(text, sender) {
+            const container = document.getElementById('chat-messages');
+            const div = document.createElement('div');
+            div.className = `message ${sender} chinese-text`;
+            div.textContent = text;
+            container.appendChild(div);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        async function callGeminiAPI(userQuery) {
+            const sys = `你是陈佳薏（Grace）的时光对话镜。佳薏：18岁，ENFP，热爱生活，已有Offer: UofT, Waterloo, McMaster, Queens, UC Davis。正在等待: UBC, UCLA。你要以一种亲切、酷且充满正能量的方式和她聊天。`;
+            const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ contents: [{ parts: [{ text: userQuery }] }], systemInstruction: { parts: [{ text: sys }] } })
+            });
+            const res = await response.json();
+            return res.candidates?.[0]?.content?.parts?.[0]?.text;
+        }
+
+        function handleKeyPress(e) { if (e.key === 'Enter') sendMessage(); }
+    </script>
+</body>
+</html>
